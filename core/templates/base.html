@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+
+<style>
+  /* Estilos personalizados para o ícone verde */
+  .icon-green {
+      color: green; /* Define a cor verde */
+  }
+  /* Estilos personalizados para o ícone vermelho */
+  .icon-red {
+          color: red; /* Define a cor vermelha */
+      }
+</style>
+
+<head>
+  {% include 'head.html' %}
+  <title>PlusPlan - Sistema de Planejamento - PMOC</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="{% url 'dashboard' %}" role="button"><i class="fas fa-bars"></i></a>
+      </li>   
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+ 
+      <!-- Topbar Navbar -->
+      <div class="topbar-divider d-none d-sm-block"></div>
+      
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+          <span class="mr-12 d-none d-lg-inline text-gray-600 small">Configurações</span>
+          
+          <!--<img class="img-profile rounded-circle"
+              src="{% static 'img/undraw_profile.svg' %}">-->
+        </a>
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">          
+
+          <div class="dropdown-divider"></div>
+        
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+
+              <a class="dropdown-item">
+                <button type="submit" class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400">Logout</button>   
+              </a>
+            </form>
+
+        </div>
+      </li>
+         
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'dashboard' %}" class="brand-link">
+      <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">PlusPlan</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'dist/img/lourival.jpeg' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{ request.user }}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+
+          <li class="nav-item">
+            <a href="{% url 'cliente_list' %}" class="nav-link">
+              <i class="fas fa-user" aria-hidden="true"></i>
+              <p>
+                Clientes
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'contrato_list' %}" class="nav-link">
+              <i class="fas fa-file-contract" aria-hidden="true"></i>
+              <p>
+                Contratos
+              </p>
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-cogs" aria-hidden="true"></i>
+              <p>
+                Administrar 
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{% url 'empresa_list'%}" class="nav-link">
+                  <i class="fas fa-building" aria-hidden="true"></i>
+                  <p>Empresa</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'resp_tecnico_list'%}" class="nav-link">
+                  <i class="fas fa-user-tie" aria-hidden="true"></i>
+                  <p>Responsável Técnico</p>
+                </a>
+              </li>
+            {% if request.user.is_superuser %}
+              <li class="nav-item">
+                <a href="{% url 'importar_atendimentos' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>importar_atendimentos</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'importar_equipamentos' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>importar_equipamentos</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'importar_atividades' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>importar_atividades</p>
+                </a>
+              </li>
+            {% endif %} 
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'controle_financeiro_list' %}" class="nav-link">
+              <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+              <p>
+                Financeiro
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="far fa-calendar-alt" aria-hidden="true"></i>
+              <p>
+                Planejamento
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'controle_list' %}" class="nav-link">
+                  <i class="fas fa-tools" aria-hidden="true"></i>
+                  <p>PMOC</p>
+                </a>
+              </li>        
+            </ul>
+          </li>
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- seu_template.html -->
+    
+
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      
+    {% block content %}
+
+    {% endblock %}
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- Footer -->
+  {% include 'footer.html' %}
+  <!-- End of Footer -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+</body>
+
+{% include 'script.html' %}
+
+{% block scripts %}
+
+<!-- Bootstrap core JavaScript-->
+<!--<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>-->
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<!--<script src="{% static 'js/sb-admin-2.min.js' %}"></script>-->
+
+<!-- Page level plugins -->
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<!--<script src="{% static 'js/demo/datatables-demo.js' %}"></script>-->
+
+
+<script>
+
+    $(document).ready(function(){
+
+        $("#data").DataTable({
+            responsive: true,
+            // "bSort": false,
+            "aaSorting": [],
+            "pageLength": 10,
+            "language": {
+                "decimal": "",
+                "emptyTable": "Sem dados disponíveis",
+                "info": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+                "infoEmpty": "Mostrando de 0 até 0 de 0 registos",
+                "infoFiltered": "(filtrado de _MAX_ registos no total)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ registos",
+                "loadingRecords": "A carregar dados...",
+                "processing": "A processar...",
+                "search": "Procurar:",
+                "zeroRecords": "Não foram encontrados resultados",
+                "paginate": {
+                    "first": "Primeiro",
+                    "last": "Último",
+                    "next": "Seguinte",
+                    "previous": "Anterior"
+                },
+                "aria": {
+                    "sortAscending": ": ordem crescente",
+                    "sortDescending": ": ordem decrescente"
+                }
+            }
+        });
+
+    });
+
+</script> 
+
+{% endblock %}
+</html>

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{titulo}}{{id}}</h6>
+                        </div>
+
+                        <form method="POST" class="lead px-4" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    {{ form|crispy }}
+                                </div>
+ 
+                            </div>
+                            <p class="lead px-0">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="button" class="btn btn-secondary" onclick="history.go(-1)">Voltar</button>
+                            </p>
+                        </form>
+                        
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+</body>
+
+
+<script>
+    function showHideFields() {
+        var tipoDocumento = document.getElementById('id_tipo_documento').value;
+        if (tipoDocumento === 'pf') {
+            document.getElementById('div_id_cpf').style.display = 'block';
+            document.getElementById('div_id_cnpj').style.display = 'none';
+        } else if (tipoDocumento === 'pj') {
+            document.getElementById('div_id_cpf').style.display = 'none';
+            document.getElementById('div_id_cnpj').style.display = 'block';
+        }
+    }
+
+    // Chamando a função quando houver uma mudança no valor do campo tipo_documento
+    document.getElementById('id_tipo_documento').addEventListener('change', showHideFields);
+
+    // Chamando a função no carregamento da página para garantir que os campos estejam corretamente exibidos/ocultos inicialmente
+    window.onload = function() {
+        // Configurando para exibir campos de CNPJ por padrão
+        showHideFields();
+        // Chamando a função showHideFields para garantir que os campos estejam corretamente exibidos/ocultos
+        showHideFields();
+    };
+</script>
+
+<!-- Adicione este script ao final do seu template -->
+<script>
+    // Função para formatar CNPJ
+    function formatarCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, ''); // Remove caracteres não numéricos
+        cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2'); // Adiciona ponto após os primeiros dois dígitos
+        cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3'); // Adiciona ponto após os próximos três dígitos
+        cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2'); // Adiciona barra após os próximos três dígitos
+        cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2'); // Adiciona hífen após os próximos quatro dígitos
+        return cnpj;
+    }
+
+    // Função para formatar CPF
+    function formatarCPF(cpf) {
+        cpf = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após os primeiros três dígitos
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após os próximos três dígitos
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona hífen após os próximos três dígitos
+        return cpf;
+    }
+
+    // Função para aplicar máscara de CNPJ
+    document.getElementById('id_cnpj').addEventListener('input', function(event) {
+        var cnpj = event.target.value;
+        event.target.value = formatarCNPJ(cnpj);
+    });
+
+    // Função para aplicar máscara de CPF
+    document.getElementById('id_cpf').addEventListener('input', function(event) {
+        var cpf = event.target.value;
+        event.target.value = formatarCPF(cpf);
+    });
+</script>
+
+
+<!--SCRIPT PARA CONFIGURAÇÃO DE DATA-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            dateFormat: 'yy-mm-dd'  // Formato de data esperado pelo Django
+        });
+    });
+</script>
+
+
+{% endblock %}
+

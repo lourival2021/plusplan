@@ -1,0 +1,185 @@
+{% block content %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronograma de Manutenções Preventivas</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .title-row {
+      background-color: #f2f2f2;
+    }
+    .title {
+      text-align: center;
+      padding: 10px;
+      margin: 0;
+    }
+    .header-img {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #000; /* Adiciona uma borda para visualização */
+            padding: 10px; /* Adiciona espaçamento interno */
+    }
+    .header-img img {
+        max-width: 100px; /* Define a largura máxima para a imagem */
+        height: auto; /* Garante que a altura seja ajustada automaticamente */
+    }
+    .header-img p {
+        margin: 0; /* Remove as margens padrão do parágrafo */
+        text-align: center; /* Centraliza o texto */
+    }
+    .approval-info {
+        font-weight: bold; /* Deixa o texto em negrito */
+    }
+    .negrito {
+        font-weight: bold;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+  <header class="header-img">
+    <img src="{% static 'img/logo_imqpa.jpg' %}">
+    <p>Plano de Manutenção, Operação e Controle</p>
+    <p class="approval-info">Aprovação: <br> {{ atendimento.contrato.inicio_contrato|date:"d/m/Y" }} <br> Revisão: 00</p>
+  </header>
+
+<h3 style="text-align:center;">ANEXO II</h3>
+<h2 style="text-align:center;">CALENDÁRIO ANUAL DE MANUTENÇÃO PREVENTIVA</h2>
+
+<table>
+  <tr class="title-row">
+    <td colspan="13" class="title">Cronograma de Manutenções Preventivas</td>
+  </tr>
+  <tr>
+    <th>Dependência</th>
+    <th>Jan</th>
+    <th>Fev</th>
+    <th>Mar</th>
+    <th>Abr</th>
+    <th>Mai</th>
+    <th>Jun</th>
+    <th>Jul</th>
+    <th>Ago</th>
+    <th>Set</th>
+    <th>Out</th>
+    <th>Nov</th>
+    <th>Dez</th>
+  </tr>
+  {% for atendimento in atendimentos %}
+    <tr>
+        <td>{{ atendimento.nome }}</td>
+      
+        <td>
+            {% for atividade in atividades %}
+                {% if atividade.competencia == 1 and atividade.equipamento.atendimento == atendimento %}
+                    {{ atividade.get_periodicidade_display|first }}
+                {% endif %}
+            {% endfor %}
+        </td>
+        <td>
+          {% for atividade in atividades %}
+              {% if atividade.competencia == 2 and atividade.equipamento.atendimento == atendimento %}
+                  {{ atividade.get_periodicidade_display|first }}
+              {% endif %}
+          {% endfor %}
+      </td>
+      <td>
+        {% for atividade in atividades %}
+            {% if atividade.competencia == 3 and atividade.equipamento.atendimento == atendimento %}
+                {{ atividade.get_periodicidade_display|first }}
+            {% endif %}
+        {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 4 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 5 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 6 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 7 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 8 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 9 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 10 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 11 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 12 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    </tr>
+  {% endfor %}
+
+
+</table>
+
+</body>
+</html>
+
+{% endblock %}
+

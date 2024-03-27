@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Atendimentos</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a> / <a href="{% url 'contrato_list' %}">Contratos</a></li>
+                            <li class="breadcrumb-item active">Atendimentos</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </div>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-4" style="background-color: blue; position: relative;">
+                            <h6 class="m-0 font-weight-bold text-white" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 20px;">UNIDADES DE ATENDIMENTO</h6>
+                        </div>
+                        
+                        
+                        <br>
+                        {% if messages %}
+                        <div class="alert alert-warning">
+                                {% for m in messages %}
+                                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body">
+                            {% for contrato in contratos %}
+                                <a href="{% url 'atendimento_create' contrato.id %}">
+                                    <button type="button" class="btn btn-primary" style="margin-bottom: 10px;">+ Atendimento</button>
+                                </a>
+                                
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default" style="margin-bottom: 10px;">Imprimir</button>
+                                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" style="margin-bottom: 10px;">
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu" role="menu">
+                                      <a class="dropdown-item" href="{% url 'imprimir_cronograma' contrato.id %}">Cronograma <i class="fas fa-print icon-green" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm" id="data" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr style="background-color:rgba(0, 0, 0, 0.726); color: white;">
+                                            <th>Atendimento</th>
+                                            <th>Endereço</th>
+                                            <th>Bairro</th>
+                                            <th>Cidade</th>
+                                            <th>Uf</th>
+                                            <th>Cep</th>
+                                            {% if user.is_staff %}
+                                                <th></th>
+                                            {% endif %}
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for atendimento in atendimentos %}
+                                        <tr>
+                                            
+                                            <td><a href="{% url 'atendimento_edit' atendimento.id %}">{{ atendimento.nome }}</a></td>
+                                            <td>{{ atendimento.endereco }}</td>
+                                            <td>{{ atendimento.bairro }}</td>
+                                            <td>{{ atendimento.cidade }}</td>
+                                            <td>{{ atendimento.uf }}</td>
+                                            <td>{{ atendimento.cep }}</td>
+                                            {% if user.is_staff %}
+                                                <td>
+                                                    <a href="{% url 'atendimento_delete' atendimento.id %}" title="Excluir">
+                                                        <i class="fa fa-trash icon-red" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            {% endif %}
+                                            <td>
+                                                <a href="{% url 'equipamento_list' atendimento.id %}" title="EQUIPAMENTOS">
+                                                    <i class="fas fa fa-list" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'imprimir' atendimento.id %}" title="IMPRIMIR PMOC">
+                                                    <i class="fas fa-print icon-green" aria-hidden="true"></i>
+                                                </a>
+                                                
+                                            </td>
+                                        </tr>
+                                        
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="9">Nenhum equipamento registrado </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+                               <!-- <nav aria-label="Navegação de página">
+                                  <ul class="pagination justify-content-center">
+                                      {% if page_obj.has_previous %}
+                                        <li class="page-item">
+                                          <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1">&laquo;Anterior</a>
+                                        </li>
+                                      {% endif %}
+
+                                        <li class="page-item active">
+                                          <a class="page-link" href="#">Página: {{ page_obj.number }} de {{ page_obj.paginator.num_pages }} <span class="sr-only">(atual)</span></a>
+                                        </li>
+
+                                      {% if page_obj.has_next %}
+                                        <li class="page-item">
+                                          <a class="page-link" href="?page={{page_obj.next_page_number}}">&raquo;Próximo</a>
+                                        </li>
+                                      {% endif %}
+                                  </ul>
+                                </nav> -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+   
+</body>
+
+{% endblock %}
+

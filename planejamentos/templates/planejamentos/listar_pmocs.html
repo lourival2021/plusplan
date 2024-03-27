@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+    .status-concluido {
+        color: blue;
+    }
+
+    .status-pendente {
+        color: orange;
+    }
+
+    .status-em-atraso {
+        color: red;
+    }
+</style>
+
+<style>
+    .celula-atrasada {
+        background-color: red; /* Define a cor de fundo como vermelho */
+        color: white; /* Define a cor do texto como branco para melhor legibilidade */
+    }
+
+    .celula-concluido {
+        background-color: blue; /* Define a cor de fundo como azul */
+        color: white; /* Define a cor do texto como branco para melhor legibilidade */
+    }
+
+    .celula-pendente {
+        background-color: orange; /* Define a cor de fundo como laranja */
+        color: white; /* Define a cor do texto como branco para melhor legibilidade */
+    }
+</style>
+
+
+<body id="page-top">
+    
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Pmoc</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a> / <a href="{% url 'controle_list' %}">Controle</a></li>
+                            <li class="breadcrumb-item active">Pmoc</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </div>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-4" style="background-color: blue; position: relative;">
+                            <h6 class="m-0 font-weight-bold text-white" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 20px;">Plano de Manutenção, Operação e Controle (PMOC)</h6>
+                        </div>
+
+                        <br>
+                        {% if messages %}
+                        <div class="alert alert-warning">
+                                {% for m in messages %}
+                                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!--CABEÇALHO DO PMOC-->
+                        
+                        <form class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <select class="form-control select2bs4"  name="atendimento" style="width: 100%; ">
+                                   
+                                    <option value="" selected>Selecione sua Opção</option>
+                                    {% for atendimento in atendimentos %}
+                                        <option value="{{ atendimento.id }}" {% if request.GET.atendimento == atendimento.id %}selected{% endif %}>{{ atendimento.nome }}</option>
+
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group mx-sm-3 mb-2">
+                                <select class="form-control select2bs4"  name="competencia" style="width: 100%; ">
+                                    <option value="" selected>Selecione sua Opção</option>
+                                    <option value="0" {% if request.GET.competencia == "0" %}selected{% endif %}>Todos</option>
+                                    <option value="1" {% if request.GET.competencia == "1" %}selected{% endif %}>Janeiro</option>
+                                    <option value="2" {% if request.GET.competencia == "2" %}selected{% endif %}>Fevereiro</option>
+                                    <option value="3" {% if request.GET.competencia == "3" %}selected{% endif %}>Março</option>
+                                    <option value="4" {% if request.GET.competencia == "4" %}selected{% endif %}>Abril</option>
+                                    <option value="5" {% if request.GET.competencia == "5" %}selected{% endif %}>Maio</option>
+                                    <option value="6" {% if request.GET.competencia == "6" %}selected{% endif %}>Junho</option>
+                                    <option value="7" {% if request.GET.competencia == "7" %}selected{% endif %}>Julho</option>
+                                    <option value="8" {% if request.GET.competencia == "8" %}selected{% endif %}>Agosto</option>
+                                    <option value="9" {% if request.GET.competencia == "9" %}selected{% endif %}>Setembro</option>
+                                    <option value="10" {% if request.GET.competencia == "10" %}selected{% endif %}>Outubro</option>
+                                    <option value="11" {% if request.GET.competencia == "11" %}selected{% endif %}>Novembro</option>
+                                    <option value="12" {% if request.GET.competencia == "12" %}selected{% endif %}>Dezembro</option>
+
+                                </select>
+                            </div>
+                            
+                            <div class="form-group mx-sm-3 mb-2">
+                                 <label for="" class="sr-only">Busca</label>
+                                 <input type="text" name="search_value" value="{{ request.GET.search_value }}" class="form-control" id="" autocomplete="off" placeholder="">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                      
+                        </form>
+
+                        {% for contrato, equipamentos in equipamentos_por_contrato.items %}
+                            <div class="invoice p-3 mb-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>
+                                            INFORMAÇÕES: 
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="row invoice-info">
+                                    <div class="col-sm-2 invoice-col ">
+                                        <address>
+                                            <strong>Contrato:</strong><br>
+                                            {{ contrato }}<br>
+                                        </address>
+                                    </div>
+                                    <div class="col-sm-4 invoice-col">
+                                        <address> 
+                                            <strong style="display: inline;">Cliente:</strong><br>
+                                            {{ contrato.cliente }}<br>
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <!-- NAV BAR-->
+                        <div class="row">
+                            <div class="col-12 col-sm-12">
+                                <div class="card card-primary card-tabs">
+                                    <div class="card-header p-0 pt-1">
+                                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                            <li class="nav-item">
+                                            <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Atividades</a>
+                                            </li>
+                                            <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Registros de Atividades</a>
+                                            </li>
+                                            <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Atividades Inativas</a>
+                                            </li>
+                                            <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Atividades com Problemas</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                    <div class="tab-content" id="custom-tabs-one-tabContent">
+                                        
+                                        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+                                            
+                                            <!-- INICIO-->
+                                            <div class="card-body">
+                            
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-sm" id="data" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr style="background-color:rgba(0, 0, 0, 0.726); color: white;">
+                                                               
+                                                                
+                                                                <th>Atendimento</th>
+                                                                <th>P</th>
+                                                                <th>Ambiente</th>
+                                                                <th>Tipo</th>
+                                                                <th>Tag</th>
+                                                                <th>Série</th>
+                                                                <th>Marca</th>
+                                                                <th>Capacidade</th>
+                                                                <th>Mês</th>
+                                                                <th>Periodicidade</th>
+                                                                <th>Início</th>
+                                                                <th>Término</th>
+                                                                <th>Status</th>
+                                                                <th>Ação</th>
+                                                              
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for atividade in page_obj %}
+                                                                <tr>
+                                                                    
+                                                                    <td>{{ atividade.equipamento.atendimento }}</td>
+                                                                    <td>
+                                                                        {% if atividade.problema %}
+                                                                            <a href="{% url 'atividade_problema_list' atividade.id %}" title="PROBLEMA NESSA ATIVIDADE">
+                                                                                <i class="fas fa-exclamation-circle text-danger"></i> <!-- Ícone de alerta -->
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td>{{ atividade.equipamento.ambiente }}</td>
+                                                                    <td>{{ atividade.equipamento.tipo }}</td>
+                                                                    <td>{{ atividade.equipamento.tag }}</td>
+                                                                    <td>{{ atividade.equipamento.numero_serie }}</td>
+                                                                    <td>{{ atividade.equipamento.marca }}</td>
+                                                                    <td>{{ atividade.equipamento.capacidade }}</td>
+                                                                    <td>{{ atividade.get_competencia_display }}</td>
+                                                                    <td>{{ atividade.periodicidade }}</td>
+                                                                    <td class="{% if atividade.status == 'Atrasado' %}celula-atrasada{% elif atividade.status == 'Concluído' %}celula-concluido{% elif atividade.status == 'Pendente' %}celula-pendente{% endif %}">{{ atividade.inicio_manutencao|date:"d/m/Y" }}</td>
+                                                                    <td class="{% if atividade.status == 'Atrasado' %}celula-atrasada{% elif atividade.status == 'Concluído' %}celula-concluido{% elif atividade.status == 'Pendente' %}celula-pendente{% endif %}">{{ atividade.termino_manutencao|date:"d/m/Y" }}</td>
+                                                                    <td class="{% if atividade.status == 'Concluído' %}status-concluido{% elif atividade.status == 'Pendente' %}status-pendente{% elif atividade.status == 'Atrasado' %}status-em-atraso{% endif %}">
+                                                                        {{ atividade.status }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="{% url 'atividade_list' atividade.id %}" title="ATIVIDADE">
+                                                                            <i class="fas fa fa-list" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% empty %}
+                                                                <tr>
+                                                                    <td colspan="14">Não há atividades disponíveis.</td>
+                                                                </tr>
+                                                            {% endfor %}
+                    
+                                                        </tbody>
+                                                    </table>
+                    
+                                                    <nav aria-label="Navegação de página">
+                                                      <ul class="pagination justify-content-center">
+                                                          {% if page_obj.has_previous %}
+                                                            <li class="page-item">
+                                                              <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1">&laquo;Anterior</a>
+                                                            </li>
+                                                          {% endif %}
+                    
+                                                            <li class="page-item active">
+                                                              <a class="page-link" href="#">Página: {{ page_obj.number }} de {{ page_obj.paginator.num_pages }} <span class="sr-only">(atual)</span></a>
+                                                            </li>
+                    
+                                                          {% if page_obj.has_next %}
+                                                            <li class="page-item">
+                                                              <a class="page-link" href="?page={{page_obj.next_page_number}}">&raquo;Próximo</a>
+                                                            </li>
+                                                          {% endif %}
+                                                      </ul>
+                                                    </nav> 
+                    
+                                                </div>
+                                            </div>
+                                            <!--FIM-->
+
+                                            
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                                            Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+                                            Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                                        </div>
+                                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+                                            Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!--ROW-->
+                          
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <script>
+        $(document).ready(function() {
+            // Adiciona a classe 'bg-danger' à célula da tabela quando o status for 'Pendente'
+            $(".status-pendente").closest("tr").addClass("table-danger");
+        });
+    </script>
+    
+    
+</body>
+
+{% endblock %}
+

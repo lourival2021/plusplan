@@ -1,0 +1,464 @@
+{% block content %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            font-size: 12pt;
+        }
+        h3 {
+            text-align: left;
+            font-weight: bold;
+        }
+        p, blockquote {
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        .header-img {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #000; /* Adiciona uma borda para visualização */
+            padding: 10px; /* Adiciona espaçamento interno */
+        }
+        .header-img img {
+            max-width: 100px; /* Define a largura máxima para a imagem */
+            height: auto; /* Garante que a altura seja ajustada automaticamente */
+        }
+        .header-img p {
+            margin: 0; /* Remove as margens padrão do parágrafo */
+            text-align: center; /* Centraliza o texto */
+        }
+        .approval-info {
+            font-weight: bold; /* Deixa o texto em negrito */
+        }
+        .negrito {
+            font-weight: bold;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+{% for atendimento in atendimentos %}
+<body>
+    <header class="header-img">
+        <img src="{% static 'img/logo_imqpa.jpg' %}">
+        <p>Plano de Manutenção, Operação e Controle</p>
+        <p class="approval-info">Aprovação: <br> {{ atendimento.contrato.inicio_contrato|date:"d/m/Y" }} <br> Revisão: 00</p>
+    </header>
+    
+    <section>
+        <h3>1. APRESENTAÇÃO</h3>
+        <p>Apresentamos-lhe o ‘Plano de Manutenção, Operação e Controle’ (PMOC), elaborado pelo(a) <span class="negrito">{{ atendimento.contrato.empresa.nome }} 
+        </span>, em 
+        atendimento à Portaria GM/MS nº 3523, os padrões, valores, parâmetros, normas e procedimentos 
+        necessários à garantia da boa qualidade do ar interior, inclusive de temperatura, umidade, velocidade, taxa 
+        de renovação e grau de pureza, são os regulamentados pela Resolução n
+        o
+        9, de 16 de janeiro de 2003, da 
+        Agência Nacional de Vigilância Sanitária - ANVISA, e aos requisitos estabelecidos pelo(a) <span class="negrito"> 
+        {{ atendimento.contrato.cliente.nome }}</span>.</p>
+        <p>Este plano define a sistemática utilizada na execução dos serviços nas instalações do <span class="negrito"> 
+        {{ atendimento.contrato.cliente.nome }}</span>, estabelecendo sistemáticas de manutenção preventiva e corretiva, através do 
+        calendário, do controle de manutenção.</p>
+        <p>A {{ atendimento.contrato.empresa.nome }} busca, através de Plano de Manutenção, Operação e Controle, prestar serviços de forma coerente, 
+        atendendo à sua Política da Qualidade:</p>
+        <blockquote>
+            <p>“Buscar a excelência dos serviços de manutenção, por meio do sistema de gestão da qualidade em melhoria 
+            contínua, para atender aos requisitos organizacionais e legais, gerando a plena satisfação dos clientes”.</p>
+        </blockquote>
+    </section>
+    
+    <section>
+        <h3>2. OBJETO DO CONTRATO</h3>
+        <p>{{ atendimento.contrato.objeto|safe }}</p>
+    </section>
+    
+    <section>
+        <h3>3. IDENTIFICAÇÃO DO PROPRIETÁRIO</h3>
+        <p>Razão Social: {{ atendimento.contrato.cliente.nome }} / {{ atendimento.nome }}<br>
+        CNPJ: {{ atendimento.cnpj }}<br>
+        Endereço: {{ atendimento.endereco }}<br>
+        Bairro: {{ atendimento.bairro }}, Cidade: {{ atendimento.cidade }}/{{ atendimento.uf }},<br>
+        CEP: {{ atendimento.cep }}</p>
+    </section>
+    
+    <section>
+        <h3>4. IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO</h3>
+        <p>Razão Social: {{ atendimento.contrato.empresa.nome }} <br>
+        CNPJ: {{ atendimento.contrato.empresa.cnpj }} <br> 
+        Inscrição Estadual: <br>
+        Inscrição municipal: <br>
+        Endereço: {{ atendimento.contrato.empresa.endereco }} <br>
+        CEP: {{ atendimento.contrato.empresa.cep }} – {{ atendimento.contrato.empresa.cidade }}/{{ atendimento.contrato.empresa.uf }} <br>
+        Telefone: {{ atendimento.contrato.empresa.telefone }} <br>
+        Email: {{ atendimento.contrato.empresa.email }} <br>
+        Eng: {{ atendimento.contrato.empresa.resp_tecnico }} <br>
+        Crea: {{ atendimento.contrato.empresa.resp_tecnico.rigistro_conselho }}  <br>
+        ART:{{ atendimento.contrato.empresa.resp_tecnico.art }}</p> 
+    </section>
+    
+    <section>
+        <h3>5. IDENTIFICAÇÃO DOS AMBIENTES CLIMATIZADOS</h3>
+        <p>A identificação dos ambientes climatizados é apresentada no ‘ANEXO I - Relação de Equipamentos’.</p>
+    </section>
+    
+    <section>
+        <h3>6. SISTEMÁTICA DE MANUTENÇÃO</h3>
+        <h4>6.1. SISTEMÁTICA MANUTENÇÃO PREVENTIVA</h4>
+        <p>A Manutenção Preventiva Sistemática consiste em um conjunto de atividades que visam manter o 
+        equipamento em condições de cumprir as funções requeridas de operação, buscando atuar na eliminação 
+        dos defeitos e más condições de funcionamento. 
+        Para a programação e planejamento anual das manutenções preventivas a {{ atendimento.contrato.empresa.nome }} utiliza o ‘ANEXO II –
+        Calendário Anual de Preventivas’.
+        A manutenção preventiva é executada conforme rotinas de manutenção contidas no check list. O registro 
+        gerado é o check list do equipamento assinado pelo manutentor e entregue cópia para o {{ atendimento.contrato.cliente.nome }}. 
+        E o relatório de ocorrências, devidamente assinado pelo manutentor e responsável {{ atendimento.contrato.cliente.nome }}.</p>                             
+        
+        <h4>6.2. SISTEMÁTICA ATENDIMENTO/MANUTENÇÃO CORRETIVA</h4>
+        <p>A manutenção corretiva consiste na execução de ações que visam resgatar o padrão operacional original 
+        dos equipamentos/sistemas, restabelecendo as condições originais de utilização, instalação, projeto, 
+        especificação e fabricação, alterada pela ocorrência de falhas ou defeitos.
+        O {{ atendimento.contrato.cliente.nome }} poderá efetuar a abertura de chamados através de telefone e impressão de Ordem 
+        de Serviço para o Técnico de Refrigeração, que providencia o atendimento.
+        O registro gerado pelo atendimento é descrito contendo as informações do atendimento realizado na 
+        ordem de serviços, assinado pelo manutentor e solicitante {{ atendimento.contrato.cliente.nome }}.
+        O relatório é analisado e assinado pelo Técnico de Refrigeração. Ao final do mês, os registros de 
+        atendimento e corretiva irão compor o relatório mensal.
+        Em caso de reincidência de defeitos e falhas, a {{ atendimento.contrato.empresa.nome }} executa análises específicas buscando a causa raiz 
+        e soluções definitivas para os problemas.</p>
+        
+        <h4>6.3. RELATÓRIO MENSAL</h4>
+        <p>Ao término de cada mês, a {{ atendimento.contrato.empresa.nome }} elabora o Relatório Mensal, que é entregue ao {{ atendimento.contrato.cliente.nome }}
+        até o dia 15 do mês subsequente ao da prestação dos serviços, contendo:
+        - Check lists executados;
+        - Relatórios de ocorrência (Ordem de Serviços) para preventivas;</p>
+    </section>
+    
+    <section>
+        <h3>7. ANEXOS</h3>
+        <p>Anexo I - Relação de Equipamentos</p>
+        <p>Anexo II - Calendário Anual de Manutenção Preventiva</p>
+        <p>Anexo III - Formulários:</p>
+        <ul>
+            <li>- Modelo Check List</li>
+            <li>- Ordem de Serviços</li>
+        </ul>
+    </section>
+
+</body>
+{% endfor %}
+</html>
+
+
+<!--######################################################################-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .title-row {
+      background-color: #f2f2f2;
+    }
+    .title {
+      text-align: center;
+      padding: 10px;
+      margin: 0;
+    }
+    .header-img {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #000; /* Adiciona uma borda para visualização */
+            padding: 10px; /* Adiciona espaçamento interno */
+    }
+    .header-img img {
+        max-width: 100px; /* Define a largura máxima para a imagem */
+        height: auto; /* Garante que a altura seja ajustada automaticamente */
+    }
+    .header-img p {
+        margin: 0; /* Remove as margens padrão do parágrafo */
+        text-align: center; /* Centraliza o texto */
+    }
+    .approval-info {
+        font-weight: bold; /* Deixa o texto em negrito */
+    }
+    .negrito {
+        font-weight: bold;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+  <header class="header-img" style="page-break-before: always;">
+    <img src="{% static 'img/logo_imqpa.jpg' %}">
+    <p>Plano de Manutenção, Operação e Controle</p>
+    <p class="approval-info">Aprovação: <br> {{ atendimento.contrato.inicio_contrato|date:"d/m/Y" }} <br> Revisão: 00</p>
+  </header>
+
+<h2 style="text-align: center;">ANEXO II</h2>
+<h2 style="text-align:center;">CALENDÁRIO ANUAL DE MANUTENÇÃO PREVENTIVA</h2>
+
+<table>
+  <tr class="title-row">
+    <td colspan="13" class="title">Cronograma de Manutenções Preventivas</td>
+  </tr>
+  <tr>
+    <th>Dependência</th>
+    <th>Jan</th>
+    <th>Fev</th>
+    <th>Mar</th>
+    <th>Abr</th>
+    <th>Mai</th>
+    <th>Jun</th>
+    <th>Jul</th>
+    <th>Ago</th>
+    <th>Set</th>
+    <th>Out</th>
+    <th>Nov</th>
+    <th>Dez</th>
+  </tr>
+  {% for atendimento in atendimentos %}
+    <tr>
+        <td>{{ atendimento.nome }}</td>
+      
+        <td>
+            {% for atividade in atividades %}
+                {% if atividade.competencia == 1 and atividade.equipamento.atendimento == atendimento %}
+                    {{ atividade.get_periodicidade_display|first }}
+                {% endif %}
+            {% endfor %}
+        </td>
+        <td>
+          {% for atividade in atividades %}
+              {% if atividade.competencia == 2 and atividade.equipamento.atendimento == atendimento %}
+                  {{ atividade.get_periodicidade_display|first }}
+              {% endif %}
+          {% endfor %}
+      </td>
+      <td>
+        {% for atividade in atividades %}
+            {% if atividade.competencia == 3 and atividade.equipamento.atendimento == atendimento %}
+                {{ atividade.get_periodicidade_display|first }}
+            {% endif %}
+        {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 4 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 5 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 6 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 7 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 8 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 9 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 10 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 11 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    <td>
+      {% for atividade in atividades %}
+          {% if atividade.competencia == 12 and atividade.equipamento.atendimento == atendimento %}
+              {{ atividade.get_periodicidade_display|first }}
+          {% endif %}
+      {% endfor %}
+    </td>
+    </tr>
+  {% endfor %}
+
+
+</table>
+
+</body>
+</html>
+<br>
+
+
+<!--###############################################################################-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            font-size: 12pt;
+        }
+        h3 {
+            text-align: left;
+            font-weight: bold;
+        }
+        p, blockquote {
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        .header-img {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #000; /* Adiciona uma borda para visualização */
+            padding: 10px; /* Adiciona espaçamento interno */
+        }
+        .header-img img {
+            max-width: 100px; /* Define a largura máxima para a imagem */
+            height: auto; /* Garante que a altura seja ajustada automaticamente */
+        }
+        .header-img p {
+            margin: 0; /* Remove as margens padrão do parágrafo */
+            text-align: center; /* Centraliza o texto */
+        }
+        .approval-info {
+            font-weight: bold; /* Deixa o texto em negrito */
+        }
+        .negrito {
+            font-weight: bold;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-img" style="page-break-before: always;">
+        <img src="{% static 'img/logo_imqpa.jpg' %}">
+        <p>Plano de Manutenção, Operação e Controle</p>
+        <p class="approval-info">Aprovação: <br> {{ atendimento.contrato.inicio_contrato|date:"d/m/Y" }} <br> Revisão: 00</p>
+    </header>
+
+    <h2 style="text-align: center;">ANEXO I</h2>
+    <h2 style="text-align: center;">CADASTRO DE EQUIPAMENTOS / INSTALAÇÕES</h2>
+
+    <table border="1" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td>Empresa</td>
+                <td>IMQPA - INSTITUTO MINEIRO DE QUALIFICAÇÃO PROFISSIONAL E ASSESSORIA</td>
+            </tr>
+            <tr>
+                <td>Contrato Nº</td>
+                <td>2022.7421.4642</td>
+            </tr>
+            <tr>
+                <td>Data</td>
+                <td>14/09/2022</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <table border="1" style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>PREFIXO</th>
+                <th>DEPENDÊNCIA</th>
+                <th>Nº DO BEM</th>
+                <th>MARCA DO EQUIPAMENTO</th>
+                <th>TIPO</th>
+                
+                <th>MOD. EVAPORADOR</th>
+                <th>MOD. CONDENSADOR</th>
+                <th>AMBIENTE</th>
+                <th>CAPACIDADE (TR)</th>
+                <th>GÁS REFRIGERANTE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipamento in equipamentos %}
+
+            <tr>
+                <td>{{ equipamento.codigo }}</td>
+                
+                <td>{{ equipamento.atendimento }}</td>
+                <td></td>
+                <td>{{ equipamento.marca }}</td>
+                <td>{{ equipamento.tipo }}</td>
+                
+                <td>{{ equipamento.mod_evaporador }}</td>
+                <td>{{ equipamento.mod_condensador }}</td>
+                <td>{{ equipamento.ambiente }}</td>
+                <td>{{ equipamento.capacidade }}</td>
+                <td>{{ equipamento.gas_refrigerante }}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+{% endblock %}
+

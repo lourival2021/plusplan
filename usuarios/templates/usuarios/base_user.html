@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+  {% include 'head.html' %}
+  
+  <title>PlusPlan - Sistema de Planejamento - PMOC</title>
+
+</head>
+
+<body class="hold-transition login-page">
+<div class="login-box">
+  <!-- /.login-logo -->
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <a href="../../index2.html" class="h1"><b>PlusPlan</b></a>
+    </div>
+    
+    <div class="card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      {% block content %}
+
+      {% endblock %}
+      
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.login-box -->
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+{% block content %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANEXO I</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            font-size: 12pt;
+        }
+        h3 {
+            text-align: left;
+            font-weight: bold;
+        }
+        p, blockquote {
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        .header-img {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #000; /* Adiciona uma borda para visualização */
+            padding: 10px; /* Adiciona espaçamento interno */
+        }
+        .header-img img {
+            max-width: 100px; /* Define a largura máxima para a imagem */
+            height: auto; /* Garante que a altura seja ajustada automaticamente */
+        }
+        .header-img p {
+            margin: 0; /* Remove as margens padrão do parágrafo */
+            text-align: center; /* Centraliza o texto */
+        }
+        .approval-info {
+            font-weight: bold; /* Deixa o texto em negrito */
+        }
+        .negrito {
+            font-weight: bold;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-img">
+        <img src="{% static 'img/logo_imqpa.jpg' %}">
+        <p>Plano de Manutenção, Operação e Controle</p>
+        <p class="approval-info">Aprovação: <br> {{ atendimento.contrato.inicio_contrato|date:"d/m/Y" }} <br> Revisão: 00</p>
+    </header>
+
+    <h2 style="text-align: center;">ANEXO I</h2>
+    <h2 style="text-align: center;">CADASTRO DE EQUIPAMENTOS / INSTALAÇÕES</h2>
+
+    <table border="1" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td>Empresa</td>
+                <td>IMQPA - INSTITUTO MINEIRO DE QUALIFICAÇÃO PROFISSIONAL E ASSESSORIA</td>
+            </tr>
+            <tr>
+                <td>Contrato Nº</td>
+                <td>2022.7421.4642</td>
+            </tr>
+            <tr>
+                <td>Data</td>
+                <td>14/09/2022</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <table border="1" style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>PREFIXO</th>
+                <th>DEPENDÊNCIA</th>
+                <th>Nº DO BEM</th>
+                <th>MARCA DO EQUIPAMENTO</th>
+                <th>TIPO</th>
+                
+                <th>MOD. EVAPORADOR</th>
+                <th>MOD. CONDENSADOR</th>
+                <th>AMBIENTE</th>
+                <th>CAPACIDADE (TR)</th>
+                <th>GÁS REFRIGERANTE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipamento in equipamentos %}
+
+            <tr>
+                <td>{{ equipamento.codigo }}</td>
+                
+                <td>{{ equipamento.atendimento }}</td>
+                <td></td>
+                <td>{{ equipamento.marca }}</td>
+                <td>{{ equipamento.tipo }}</td>
+                
+                <td>{{ equipamento.mod_evaporador }}</td>
+                <td>{{ equipamento.mod_condensador }}</td>
+                <td>{{ equipamento.ambiente }}</td>
+                <td>{{ equipamento.capacidade }}</td>
+                <td>{{ equipamento.gas_refrigerante }}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+{% endblock %}
+
