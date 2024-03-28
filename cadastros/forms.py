@@ -28,7 +28,7 @@ class EmpresaForm(ModelForm):
             'cep': MaiusculasTextInput(),
             'telefone': forms.TextInput(attrs={'type': 'tel'}),
             'email': forms.EmailInput(),
-            'resp_tecnico': MaiusculasTextInput(),
+            #'resp_tecnico': MaiusculasTextInput(),
         }
 
 

@@ -59,7 +59,7 @@ class Empresa(models.Model):
     telefone = models.CharField(verbose_name="Telefone", max_length=45, blank=True) 
     email = models.EmailField(verbose_name="Email", max_length=45, blank=True) 
     
-    resp_tecnico = models.OneToOneField('Responsavel_Tecnico', on_delete=models.SET_NULL, null=True, related_name='empresa_do_responsavel')
+    resp_tecnico = models.OneToOneField('Responsavel_Tecnico', on_delete=models.SET_NULL, blank=True, null=True, related_name='empresa_do_responsavel')
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='empresa_do_usuario')
     registro_atualizado = models.DateTimeField(auto_now=True)
     registro_criado = models.DateTimeField(auto_now_add=True)
