@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0g3jdn*n1_e4d7-s4*^&+9n6jtfb&udizy8u+j+6(5!6aj1hc&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'plusplan.orcaservi.com.br',
