@@ -72,7 +72,7 @@ class ClienteForm(ModelForm):
 class EquipamentoForm(ModelForm):
     class Meta:
         model = Equipamento      
-        exclude = ['usuario','atendimento','codigo']
+        exclude = ['usuario','atendimento','codigo','empresa']
 
     def clean(self):
         cleaned_data = super().clean()

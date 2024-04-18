@@ -211,8 +211,10 @@ def ClienteUpdate(request, id):
 @login_required
 def EquipamentoList(request,id): 
     
-    atendimento_id = id
     empresa_do_usuario = request.user.empresa_id
+    
+    #user = request.user  # Obtenha o usuário logado
+    atendimento_id = id
     
     form = EquipamentoForm() 
     atendimentos = Atendimento.objects.filter(empresa=empresa_do_usuario,id=atendimento_id)
@@ -574,7 +576,6 @@ def AtendimentoCreate(request,contrato_id):
             atendimento = form.save(commit=False)
             atendimento.usuario = request.user
             atendimento.contrato = contratos
-            atendimento.empresa = request.user.empresa
      
             atendimento.save()
             # Redireciona para a página de lista de contratos após a criação do atendimento
