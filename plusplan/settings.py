@@ -103,12 +103,19 @@ WSGI_APPLICATION = 'plusplan.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # Configurações do banco de dados para produção
+#DATABASES = {
+    #'default': {
+       # 'ENGINE': 'django.db.backends.mysql',
+      #  'OPTIONS': {    
+          #  'read_default_file': '/home/lourival/plusplan/my.cnf',  # Configurar o caminho correto
+       # },
+    #}
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {    
-            'read_default_file': '/home/lourival/plusplan/my.cnf',  # Configurar o caminho correto
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # Cria ou usa o arquivo db.sqlite3 na raiz do projeto
     }
 }
 
