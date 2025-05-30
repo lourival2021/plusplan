@@ -30,11 +30,7 @@ SECRET_KEY = 'django-insecure-0g3jdn*n1_e4d7-s4*^&+9n6jtfb&udizy8u+j+6(5!6aj1hc&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'plusplan.orcaservi.com.br',
-    'www.plusplan.orcaservi.com.br',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -98,19 +94,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'plusplan.wsgi.application'
 
+"""
+#Database
+#https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# Configurações do banco de dados para produção
-#DATABASES = {
-    #'default': {
-       # 'ENGINE': 'django.db.backends.mysql',
-      #  'OPTIONS': {    
-          #  'read_default_file': '/home/lourival/plusplan/my.cnf',  # Configurar o caminho correto
-       # },
-    #}
-#}
+#Configurações do banco de dados para produção
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {    
+        'read_default_file': '/home/lourival/plusplan/my.cnf',  # Configurar o caminho correto
+       },
+    }
+}
+"""
 
 DATABASES = {
     'default': {

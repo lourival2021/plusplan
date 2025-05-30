@@ -110,7 +110,6 @@ class ContratoForm(ModelForm):
     class Meta:
 
         model = Contrato
-        #fields = "__all__"
         exclude = ['usuario','empresa']
         widgets = {
             'contrato': MaiusculasTextInput(),

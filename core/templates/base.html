@@ -15,7 +15,7 @@
 
 <head>
   {% include 'head.html' %}
-  <title>PlusPlan - Sistema de Planejamento - PMOC</title>
+  <title>Plusplan - Sistema de Planejamento - PMOC</title>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -69,7 +69,7 @@
     <!-- Brand Logo -->
     <a href="{% url 'dashboard' %}" class="brand-link">
       <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">PlusPlan</span>
+      <span class="brand-text font-weight-light">Plusplan</span>
     </a>
 
     <!-- Sidebar -->
@@ -228,63 +228,6 @@
 {% include 'script.html' %}
 
 {% block scripts %}
-
-<!-- Bootstrap core JavaScript-->
-<!--<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>-->
-
-<!-- Core plugin JavaScript-->
-<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
-<!-- Custom scripts for all pages-->
-<!--<script src="{% static 'js/sb-admin-2.min.js' %}"></script>-->
-
-<!-- Page level plugins -->
-<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
-<!-- Page level custom scripts -->
-<!--<script src="{% static 'js/demo/datatables-demo.js' %}"></script>-->
-
-
-<script>
-
-    $(document).ready(function(){
-
-        $("#data").DataTable({
-            responsive: true,
-            // "bSort": false,
-            "aaSorting": [],
-            "pageLength": 10,
-            "language": {
-                "decimal": "",
-                "emptyTable": "Sem dados disponíveis",
-                "info": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
-                "infoEmpty": "Mostrando de 0 até 0 de 0 registos",
-                "infoFiltered": "(filtrado de _MAX_ registos no total)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ registos",
-                "loadingRecords": "A carregar dados...",
-                "processing": "A processar...",
-                "search": "Procurar:",
-                "zeroRecords": "Não foram encontrados resultados",
-                "paginate": {
-                    "first": "Primeiro",
-                    "last": "Último",
-                    "next": "Seguinte",
-                    "previous": "Anterior"
-                },
-                "aria": {
-                    "sortAscending": ": ordem crescente",
-                    "sortDescending": ": ordem decrescente"
-                }
-            }
-        });
-
-    });
-
-</script> 
 
 {% endblock %}
 </html>
