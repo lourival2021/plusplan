@@ -6,7 +6,6 @@ __pycache__
 db.sqlite3
 media
 my.cnf
-requirements.txt
 
 # Backup files # 
 *.bak 
